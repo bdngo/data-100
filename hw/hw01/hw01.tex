@@ -1,0 +1,132 @@
+\documentclass{article}
+\usepackage{eecstex}
+
+\DeclareMathOperator{\rank}{rank}
+
+\title{DATA 100 HW 01}
+\author{Bryan Ngo}
+\date{2021-08-29}
+
+\begin{document}
+
+\maketitle
+
+\section{Calculus}
+
+\begin{equation}
+    \sigma(x) = \frac{1}{1 + e^{-x}}
+\end{equation}
+
+\subsection{}
+
+\begin{theorem}
+    Given the function \(\sigma(x)\), \(\sigma(-x) = 1 - \sigma(x)\).
+\end{theorem}
+
+\begin{proof}
+    \begin{align}
+        \sigma(-x) &= \frac{1}{1 + e^x} \\
+        &= \frac{1 + e^x - e^x}{1 + e^x} \\
+        &= 1 - \frac{e^x}{1 + e^x} \frac{e^{-x}}{e^{-x}} \\
+        &= 1 - \frac{1}{1 + e^{-x}} = 1 - \sigma(x)
+    \end{align}
+\end{proof}
+
+\subsection{}
+
+\begin{theorem}
+    Given the function \(\sigma(x)\), \(\diff{x} \sigma(x) = \sigma(x) (1 - \sigma(x))\).
+\end{theorem}
+
+\begin{proof}
+    \begin{align}
+        \diff{x} \sigma(x) &= \diff{x} (1 + e^{-x})^{-1} = e^{-x} (1 + e^{-x})^{-2} \\
+        &= \frac{1}{1 + e^{-x}} \frac{e^{-x}}{1 + e^{-x}} \frac{e^x}{e^x} \\
+        &= \sigma(x) \frac{1}{1 + e^x} = \sigma(x) (1 - \sigma(x))
+    \end{align}
+\end{proof}
+
+\section{Minimization}
+
+Finding the zeroes of \(f(c)\),
+\begin{align}
+    f(c) &= \frac{1}{n} \sum_{i = 1}^n (x_i - c)^2 \\
+    f'(c) &= -\frac{2}{n} \sum_{i = 1}^n (x_i - c) = 0 \\
+    \sum_{i = 1}^n (x_i - c) = \sum_{i = 1}^n x_i - nc &= 0 \implies c = \frac{1}{n} \sum_{i = 1}^n x_i
+\end{align}
+Then, by the second derivative test,
+\begin{align}
+    f''(c) &= -\frac{2}{n} \sum_{i = 1}^n -1 = 2
+\end{align}
+implying a concave up function, meaning our zero is in fact a minimum.
+
+\section{Probability \& Statistics}
+
+\subsection{}
+
+The percent of surveyed US adults who had a great deal of confidence in both scientists and religious leaders is equal to \(39\% \cdot 17\% = 6.63\%\), by the rule of multiplication.
+
+% TODO: gut check
+
+\subsection{}
+
+\begin{align}
+    \Pr(C) &= 0.01 \implies \Pr(C^\complement) = 0.99 \\
+    \Pr(T \mid C) &= 0.8 \\
+    \Pr(T \mid C^\complement) &= 0.096 \\
+    \Pr(C \mid T) &= \frac{\Pr(C) \Pr(T \mid C)}{\Pr(C) \Pr(T \mid C) + \Pr(C^\complement) \Pr(T \mid C^\complement)} \\
+    &= \frac{0.01 \cdot 0.8}{0.01 \cdot 0.8 + 0.99 \cdot 0.096} \approx 0.078
+\end{align}
+
+\subsection{}
+
+The standard deviation is \(\sigma = 6.1\) since the inflection point of the histogram is at \(\pm \sigma\), and the image visually demonstrates this.
+
+\section{Linear Algebra}
+
+\subsection{}
+
+\begin{equation}
+    \bm{A} =
+    \begin{bmatrix}
+        1 & 1 \\
+        0 & 1
+    \end{bmatrix} \implies \rank(A) = 2
+\end{equation}
+The matrix is full rank.
+
+\subsection{}
+
+\begin{equation}
+    \bm{B} =
+    \begin{bmatrix}
+        3 & 0 \\
+        -4 & 0
+    \end{bmatrix} \implies \rank(B) = 1
+\end{equation}
+The matrix is not full rank, since \(\bm{v}_1 = 0\bm{v}_2\).
+
+\subsection{}
+
+\begin{equation}
+    \bm{C} =
+    \begin{bmatrix}
+        0 & 5 & 10 \\
+        1 & 0 & 10
+    \end{bmatrix} \implies \rank(C) = 2
+\end{equation}
+The matrix is not full rank, since \(\bm{v}_3 = 2\bm{v}_1 + 10\bm{v}_2\).
+
+\subsection{}
+
+\begin{equation}
+    \bm{D} =
+    \begin{bmatrix}
+        0 & -2 & 2 \\
+        2 & -2 & 4 \\
+        3 & 5 & -2
+    \end{bmatrix} \implies \rank(D) = 2
+\end{equation}
+The matrix is not full rank, since \(\bm{v}_3 = \bm{v}_1 - \bm{v}_2\).
+
+\end{document}
