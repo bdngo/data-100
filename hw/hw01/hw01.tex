@@ -1,6 +1,9 @@
 \documentclass{article}
 \usepackage{eecstex}
 
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}}
+
 \DeclareMathOperator{\rank}{rank}
 
 \title{DATA 100 HW 01}
@@ -64,9 +67,8 @@ implying a concave up function, meaning our zero is in fact a minimum.
 
 \subsection{}
 
-The percent of surveyed US adults who had a great deal of confidence in both scientists and religious leaders is equal to \(39\% \cdot 17\% = 6.63\%\), by the rule of multiplication.
-
-% TODO: gut check
+The percent of surveyed US adults who had a great deal of confidence in both scientists and religious leaders is impossible to find with information, since we only know what people trusted one at a time.
+To know who trusts both, we would need data for every individual and who they trusted a great deal, which is not given in the bar graph.
 
 \subsection{}
 
@@ -80,7 +82,7 @@ The percent of surveyed US adults who had a great deal of confidence in both sci
 
 \subsection{}
 
-The standard deviation is \(\sigma = 6.1\) since the inflection point of the histogram is at \(\pm \sigma\), and the image visually demonstrates this.
+The standard deviation is \(\sigma = 6.1\) since the inflection point of the histogram is at \(\pm \sigma\), and the inflection point is around \(6.1\).
 
 \section{Linear Algebra}
 
