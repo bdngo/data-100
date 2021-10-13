@@ -1,0 +1,222 @@
+\documentclass{article}
+\usepackage{eecstex}
+\usepackage{bbm}
+
+\title{DATA 100 HW 07}
+\author{Bryan Ngo}
+\date{2021-10-09}
+
+\newcommand{\X}{\mathbb{X}}
+\newcommand{\Y}{\mathbb{Y}}
+\newcommand{\One}{\mathbbm{1}}
+
+\DeclareMathOperator{\Span}{span}
+
+\begin{document}
+
+\maketitle
+
+\section*{Properties of Simple Linear Regression}
+
+\begin{gather}
+    \hat{\theta}_0 = \bar{y} - \hat{\theta}_1 \bar{x} \\
+    \hat{\theta}_1 = r \frac{\sigma_y}{\sigma_x} \\
+    \hat{y} = \bar{y} + r \frac{\sigma_y}{\sigma_x} (x - \bar{x})
+\end{gather}
+
+\section{}
+
+\subsection{}
+
+\begin{theorem}
+    The sum of residuals \(\sum_{i = 1}^n e_i = 0\).
+\end{theorem}
+\begin{proof}
+    \begin{align}
+        \sum_{i = 1}^n e_i &= \sum_{i = 1}^n (y_i - \hat{y}_i) \\
+        &= \sum_{i = 1}^n \left(y_i - \left(\bar{y} + r \frac{\sigma_y}{\sigma_x} (x_i - \bar{x})\right)\right) \\
+        &= \cancel{\sum_{i = 1}^n y_i} - \cancel{\sum_{i - 1}^n y_i} + r \frac{\sigma_y}{\sigma_x} \left(\cancel{\sum_{i = 1}^n x_i} - \cancel{\sum_{i = 1}^n x_i}\right) = 0
+\end{align}
+\end{proof}
+
+\subsection{}
+
+\begin{theorem}
+    The true mean of a sample is equal to the predicted mean of a linear regression of that sample.
+\end{theorem}
+\begin{proof}
+    Using the previous result,
+    \begin{align}
+        \sum_{i = 1}^n (y_i - \hat{y}_i) &= 0 \\
+        \implies \frac{1}{n} \sum_{i = 1}^n (y_i - \hat{y}_i) &= 0 \\
+        \implies \underbrace{\frac{1}{n} \sum_{i = 1}^n y_i}_{\bar{y}} - \underbrace{\frac{1}{n} \sum_{i = 1}^n \hat{y}_i}_{\bar{\hat{y}}} &= 0 \\
+        \implies \bar{y} &= \bar{\hat{y}}
+    \end{align}
+\end{proof}
+
+\subsection{}
+
+\begin{theorem}
+    The point \((\bar{x}, \bar{y})\) lies on the simple linear regression line.
+\end{theorem}
+\begin{proof}
+    Plugging \(\bar{x}\) into the simple linear regression,
+    \begin{align}
+        \hat{y} &= \bar{y} + r \frac{\sigma_y}{\sigma_x} (\cancel{\bar{x}} - \cancel{\bar{x}}) \\
+        \implies \hat{y} &= \bar{y}
+    \end{align}
+\end{proof}
+
+\section*{Geometric Perspective of Least Squares}
+
+\begin{equation}
+    \hat{\Y} =
+    \X
+    \begin{bmatrix}
+        \hat{\theta}_0 \\
+        \hat{\theta}_1
+    \end{bmatrix} = \hat{\theta}_0 \One + \hat{\theta}_1 \bm{x}
+\end{equation}
+
+\section{}
+
+\subsection{}
+
+\begin{theorem}
+    The sum of the elements of the residual vector \(\sum_{i = 1}^n e_i\), where \(\bm{e} =
+    \begin{bmatrix}
+        e_1 & e_2 & \cdots & e_n
+    \end{bmatrix}^\top\).
+\end{theorem}
+\begin{proof}
+    Note that the \(\sum_{i = 1}^n e^i = \One^\top \bm{e}\).
+    By definition, \(\bm{e}\) is orthogonal to \(\Span\{\X\}\).
+    This means that \(\bm{e}\) is \emph{also} orthogonal to any linear combination of the columns of \(\X = a\One + b\bm{x}\), where \(a, b \in \R\).
+    If we set \(a = 1\) and \(b = 0\), we get \(\One^\top \bm{e} = 0\).
+\end{proof}
+
+\subsection{}
+
+We can use the same explanation as above, but now we can set \(a = 0\) and \(b = 1\), meaning that \(\bm{x}^\top \bm{e} = 0\), so they are orthogonal.
+
+\subsection{}
+
+The predicted response vector \(\Y\) is nothing more than a linear combination of \(\One\) and \(\bm{x}\), with \(a = \hat{\theta}_0\) and \(b = \hat{\theta}_1\).
+By the above proof, we have \(\hat{\Y}^\top \bm{e} = 0\), and they are orthogonal.
+
+\section*{Properties of a Linear Model with No Constant Term}
+
+\begin{gather}
+    \hat{y} = \gamma x \\
+    R(\gamma) = \frac{1}{n} \sum_{i = 1}^n (y_i - \gamma x_i)^2
+\end{gather}
+
+\section{}
+
+\begin{theorem}
+    The minimum of \(R(\gamma)\) with respect to \(\gamma\) is
+    \begin{equation}
+        \hat{\gamma} = \frac{\sum x_i y_i}{\sum x_i^2}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    \begin{align}
+        \diff{\gamma} R(\gamma) &= \frac{2}{n} \sum_{i = 1}^n -x_i (y_i - \gamma x_i) \\
+        &= -\cancel{\frac{2}{n}} \sum_{i = 1}^n x_i y_i + \cancel{\frac{2}{n}} \gamma \sum_{i = 1}^n x_i^2 = 0 \\
+        \implies \hat{\gamma} = \frac{\sum x_i y_i}{\sum x_i^2}
+    \end{align}
+\end{proof}
+
+\section{}
+
+\begin{gather}
+    \hat{\Y} = \hat{\gamma} \bm{x}
+\end{gather}
+
+\subsection{}
+
+This is false, consider the data points \(\{(1, 2), (2, 5), (3, 6)\}\).
+We can find \(\hat{\gamma} = \frac{15}{7}\) and \(\hat{\Y} = \frac{1}{7}
+\begin{bmatrix}
+    15 & 30 & 45
+\end{bmatrix}^\top\).
+Our residual is \(\bm{e} = \frac{1}{7}
+\begin{bmatrix}
+    -1 & 5 & -3
+\end{bmatrix}\).
+Thus, the sum of the residuals is \(\frac{1}{7} \neq 0\).
+
+\subsection{}
+
+Since by definition \(\bm{e}\) is orthogonal to \(\Span\{\X\}\), then \(\bm{e}\) is orthogonal to any linear combination \(a\bm{x}\).
+Setting the coefficient \(a = 1\), we have \(\bm{x}^\top \bm{e} = 0\), so they are orthogonal.
+
+\subsection{}
+
+Since \(\bm{x}^\top \bm{e} = 0\), and \(\hat{\Y} = \hat{\gamma} \bm{x}\),
+\begin{equation}
+    \Y^\top \bm{e} = (\hat{\gamma} \bm{x})^\top \bm{e} = \hat{\gamma} \bm{x}^\top \bm{e} = 0
+\end{equation}
+
+\subsection{}
+
+This is false, consider the data points \(\{(1, 2), (2, 5), (3, 6)\}\).
+We have \(\bar{x} = 2\) and \(\bar{y} = \frac{13}{3}\).
+However, \(\hat{\Y} = \frac{30}{7} \neq \frac{13}{3}\).
+
+\section*{MSE "Minimizer"}
+
+\section{}
+
+\subsection{}
+
+The MSE loss function can be viewed as a sum of \textbf{quadratic} terms, each of which can be treated as a function of \(\bm{\gamma}\).
+
+\subsection{}
+
+\begin{align}
+    g'_i(\gamma) &= -x_i \frac{2}{n} (y_i - \gamma x_i) \\
+    g''_i(\gamma) &= \frac{2}{n} x_i^2 \geqslant 0
+\end{align}
+Since the \(x_i\) term is squared, the function will always be nonnegative.
+
+\subsection{}
+
+Since the function is convex, the graph of our function will always "curve" upwards.
+This implies that the point at which \(\diff{x} g(x) = 0\) will be a minimum.
+
+\subsection{}
+
+\subsubsection{}
+
+\begin{theorem}
+    Given a function \(g(x)\) that satisfies the condition
+    \begin{equation}
+        g(cx_1 + (1 - c) x_2) \leqslant cg(x_1) + (1 - c) g(x_2)
+    \end{equation}
+    for points \((x_1, g(x_1))\), \((x_2, g(x_2))\), and \(c \in [0, 1]\),
+    the sum of two convex functions \(g(x) + h(x)\) is also convex.
+\end{theorem}
+\begin{proof}
+    Let \(f(x) = g(x) + h(x)\).
+    Adding the inequalities,
+    \begin{align}
+        f(cx_1 + (1 - c) x_2) &= g(cx_1 + (1 - c) x_2) + h(cx_1 + (1 - c) x_2) \\
+        &\leqslant cg(x_1) + (1 - c) g(x_2) + ch(x_1) + (1 - c) h(x_2) \\
+        &= c(g(x_1) + h(x_1)) + (1 - c) (g(x_2) + h(x_2)) \\
+        &= cf(x_1) + (1 - c) f(x_2)
+    \end{align}
+\end{proof}
+
+\subsubsection{}
+
+Since the sum of two convex functions is also convex, one or both of the convex functions can also be a sum of convex functions, and recursively \emph{ad infinitum}.
+This can be proved with induction.
+
+\subsection{}
+
+We have also proved that all convex functions' critical points are minimums.
+We have previously proved that the MSE loss function is convex through the second derivative test.
+By deduction, this means that the MSE loss function's critical point(s) are minimums.
+
+\end{document}
