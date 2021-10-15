@@ -33,10 +33,10 @@
 \end{theorem}
 \begin{proof}
     \begin{align}
-        \sum_{i = 1}^n e_i &= \sum_{i = 1}^n (y_i - \hat{y}_i) \\
-        &= \sum_{i = 1}^n \left(y_i - \left(\bar{y} + r \frac{\sigma_y}{\sigma_x} (x_i - \bar{x})\right)\right) \\
+        \sum_{i = 1}^n e_i &= \sum_{i = 1}^n (y_i - \hat{y}_i) = \sum_{i = 1}^n \left(y_i - \left(\bar{y} + r \frac{\sigma_y}{\sigma_x} (x_i - \bar{x})\right)\right) \\
         &= \cancel{\sum_{i = 1}^n y_i} - \cancel{\sum_{i - 1}^n y_i} + r \frac{\sigma_y}{\sigma_x} \left(\cancel{\sum_{i = 1}^n x_i} - \cancel{\sum_{i = 1}^n x_i}\right) = 0
-\end{align}
+    \end{align}
+    where we use the fact that the \(\frac{1}{n}\) term in the definition of the mean cancels out the summation factor of \(n\).
 \end{proof}
 
 \subsection{}
@@ -61,10 +61,9 @@
 \end{theorem}
 \begin{proof}
     Plugging \(\bar{x}\) into the simple linear regression,
-    \begin{align}
-        \hat{y} &= \bar{y} + r \frac{\sigma_y}{\sigma_x} (\cancel{\bar{x}} - \cancel{\bar{x}}) \\
-        \implies \hat{y} &= \bar{y}
-    \end{align}
+    \begin{equation}
+        \hat{y} = \bar{y} + r \frac{\sigma_y}{\sigma_x} (\cancel{\bar{x}} - \cancel{\bar{x}}) = \bar{y}
+    \end{equation}
 \end{proof}
 
 \section*{Geometric Perspective of Least Squares}
@@ -90,8 +89,8 @@
 \end{theorem}
 \begin{proof}
     Note that \(\sum_{i = 1}^n e^i = \One^\top \bm{e}\).
-    By definition, \(\bm{e}\) is orthogonal to \(\Span\{\X\}\).
-    This means that \(\bm{e}\) is \emph{also} orthogonal to any linear combination of the columns of \(\X = a\One + b\bm{x}\), where \(a, b \in \R\).
+    By definition, \(\bm{e}\) is orthogonal to \(\X\), as that arises out of minimizing the norm of error in predictions as noted in the geometric perspective.
+    This means that \(\bm{e}\) is \emph{also} orthogonal to any linear combination of the columns of \(\X\), being \(\Span\{\X\} = a\One + b\bm{x}\), where \(a, b \in \R\).
     If we set \(a = 1\) and \(b = 0\), we get \(\One^\top \bm{e} = 0\).
 \end{proof}
 
@@ -101,8 +100,9 @@ We can use the same explanation as above, but now we can set \(a = 0\) and \(b =
 
 \subsection{}
 
-The predicted response vector \(\Y\) is nothing more than a linear combination of \(\One\) and \(\bm{x}\), with \(a = \hat{\theta}_0\) and \(b = \hat{\theta}_1\).
-By the above proof, we have \(\hat{\Y}^\top \bm{e} = 0\), and they are orthogonal.
+The predicted response vector \(\hat{\Y}\) is nothing more than a linear combination of \(\One\) and \(\bm{x}\), with \(a = \hat{\theta}_0\) and \(b = \hat{\theta}_1\).
+This means that \(\hat{\Y} \in \Span\{\X\}\).
+By the above logic in \textbf{2.a}, we have \(\hat{\Y}^\top \bm{e} = 0\), and they are orthogonal.
 
 \section*{Properties of a Linear Model with No Constant Term}
 
@@ -123,7 +123,8 @@ By the above proof, we have \(\hat{\Y}^\top \bm{e} = 0\), and they are orthogona
     \begin{align}
         \diff{\gamma} R(\gamma) &= \frac{2}{n} \sum_{i = 1}^n -x_i (y_i - \gamma x_i) \\
         &= -\cancel{\frac{2}{n}} \sum_{i = 1}^n x_i y_i + \cancel{\frac{2}{n}} \gamma \sum_{i = 1}^n x_i^2 = 0 \\
-        \implies \hat{\gamma} = \frac{\sum x_i y_i}{\sum x_i^2}
+        \implies \gamma \sum_{i = 1}^n x_i^2 &= \sum_{i = 1}^n x_i y_i \\
+        \hat{\gamma} &= \frac{\sum x_i y_i}{\sum x_i^2}
     \end{align}
 \end{proof}
 
@@ -148,14 +149,15 @@ Thus, the sum of the residuals is \(\frac{1}{7} \neq 0\).
 
 \subsection{}
 
-Since by definition \(\bm{e}\) is orthogonal to \(\Span\{\X\}\), then \(\bm{e}\) is orthogonal to any linear combination \(a\bm{x}\).
+Since by definition in the geometric perspective established in lecture, \(\bm{e}\) is orthogonal to \(\X\) and any vector in \(\Span\{\X\}\)
+Thus, \(\bm{e}\) is orthogonal to any linear combination \(a\bm{x}\).
 Setting the coefficient \(a = 1\), we have \(\bm{x}^\top \bm{e} = 0\), so they are orthogonal.
 
 \subsection{}
 
 Since \(\bm{x}^\top \bm{e} = 0\), and \(\hat{\Y} = \hat{\gamma} \bm{x}\),
 \begin{equation}
-    \Y^\top \bm{e} = (\hat{\gamma} \bm{x})^\top \bm{e} = \hat{\gamma} \bm{x}^\top \bm{e} = 0
+    \hat{\Y}^\top \bm{e} = (\hat{\gamma} \bm{x})^\top \bm{e} = \hat{\gamma} \bm{x}^\top \bm{e} = 0
 \end{equation}
 
 \subsection{}
